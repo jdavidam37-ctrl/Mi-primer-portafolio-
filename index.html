@@ -98,14 +98,6 @@
     margin-bottom: 14px;
     letter-spacing: -0.02em;
   }
-  header h1 .cursor {
-    display: inline-block;
-    width: 0.55ch;
-    background: var(--orange);
-    animation: blink 1s step-start infinite;
-    margin-left: 2px;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
   header p.role {
     font-size: 1.15rem;
     color: var(--cyan);
@@ -172,6 +164,7 @@
   }
 
   #contacto p { font-size: 1.05rem; }
+  #contacto p + p { margin-top: 8px; }
   #contacto a { text-decoration: none; border-bottom: 1px dotted var(--cyan); }
   #contacto a:hover { color: var(--orange); border-color: var(--orange); }
 
@@ -211,11 +204,6 @@
   footer p { color: var(--text-muted); font-size: 0.8rem; }
   footer .visitas { color: var(--orange); }
 
-  @media (prefers-reduced-motion: reduce) {
-    header h1 .cursor { animation: none; }
-    .proyecto { transition: none; }
-  }
-
   @media (max-width: 600px) {
     header { padding: 60px 20px 50px; }
   }
@@ -233,7 +221,7 @@
 
   <header>
     <p class="prompt">whoami</p>
-    <h1>Juan David Arenas<span class="cursor">&nbsp;</span></h1>
+    <h1>Juan David Arenas</h1>
     <p class="role">Análisis y Desarrollo de Software</p>
   </header>
 
@@ -281,6 +269,7 @@
   <section id="contacto">
     <h2>contacto.txt</h2>
     <p>📧 <a href="mailto:jdavidam37@gmail.com">jdavidam37@gmail.com</a></p>
+    <p>📱 <a href="tel:+573005349535">300 534 9535</a></p>
 
     <div class="msg-box">
       <button id="saludoBtn">Salúdame 👋</button>
