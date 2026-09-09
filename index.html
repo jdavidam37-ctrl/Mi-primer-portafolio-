@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juan David Arenas — Portafolio</title>
+<style>
+  :root {
+    --bg: #0D1117;
+    --bg-alt: #10151C;
+    --surface: #161B22;
+    --surface-border: #262D38;
+    --text: #E6EDF3;
+    --text-muted: #8B949E;
+    --purple: #BD93F9;
+    --cyan: #56D4DD;
+    --orange: #FFB86C;
+  }
+
+  [data-theme="light"] {
+    --bg: #F6F7F9;
+    --bg-alt: #FFFFFF;
+    --surface: #FFFFFF;
+    --surface-border: #E1E4E8;
+    --text: #10151C;
+    --text-muted: #57606A;
+    --purple: #7C3AED;
+    --cyan: #0891A1;
+    --orange: #C2650A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  code, .mono, nav a, .tab-label, .prompt, header h1, .proyecto h3, footer p {
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  }
+
+  a { color: var(--cyan); }
+
+  /* ---------- Barra de título estilo editor ---------- */
+  .titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--surface-border);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.red { background: #FF5F56; }
+  .dot.yellow { background: #FFBD2E; }
+  .dot.green { background: #27C93F; }
+  .titlebar span.filename {
+    margin-left: 14px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .titlebar .toggle-btn {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--surface-border);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+  .titlebar .toggle-btn:hover { border-color: var(--purple); }
+  .titlebar .toggle-btn:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
+
+  /* ---------- Header ---------- */
+  header {
+    padding: 90px 20px 70px;
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .prompt {
+    color: var(--purple);
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+  }
+  .prompt::before { content: "$ "; color: var(--text-muted); }
+  header h1 {
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  header h1 .cursor {
+    display: inline-block;
+    width: 0.55ch;
+    background: var(--orange);
+    animation: blink 1s step-start infinite;
+    margin-left: 2px;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  header p.role {
+    font-size: 1.15rem;
+    color: var(--cyan);
+  }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg-alt);
+    border-top: 1px solid var(--surface-border);
+    border-bottom: 1px solid var(--surface-border);
+    padding: 0 20px;
+    display: flex;
+    gap: 4px;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 14px 16px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  nav a:hover, nav a:focus-visible { color: var(--text); }
+  nav a:nth-child(1):hover { border-bottom-color: var(--purple); }
+  nav a:nth-child(2):hover { border-bottom-color: var(--cyan); }
+  nav a:nth-child(3):hover { border-bottom-color: var(--orange); }
+
+  /* ---------- Secciones ---------- */
+  section { padding: 60px 20px; max-width: 800px; margin: 0 auto; }
+  section h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  section h2::before { content: "// "; color: var(--purple); }
+  section p { color: var(--text); max-width: 68ch; font-size: 1.02rem; }
+
+  .proyecto {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-left: 3px solid var(--cyan);
+    padding: 22px 24px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    transition: border-left-color 0.2s ease, transform 0.15s ease;
+  }
+  .proyecto:nth-of-type(2) { border-left-color: var(--orange); }
+  .proyecto:hover { transform: translateX(4px); }
+  .proyecto h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--text); }
+  .proyecto p { font-size: 0.95rem; color: var(--text-muted); }
+  .proyecto .stack {
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--purple);
+  }
+
+  #contacto p { font-size: 1.05rem; }
+  #contacto a { text-decoration: none; border-bottom: 1px dotted var(--cyan); }
+  #contacto a:hover { color: var(--orange); border-color: var(--orange); }
+
+  .msg-box {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .msg-box button {
+    background: var(--purple);
+    color: #0D1117;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+  }
+  .msg-box button:hover { filter: brightness(1.1); }
+  .msg-box button:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+  #saludo-output {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--cyan);
+    min-height: 1.4em;
+  }
+
+  footer {
+    border-top: 1px solid var(--surface-border);
+    text-align: center;
+    padding: 28px 20px 40px;
+  }
+  footer p { color: var(--text-muted); font-size: 0.8rem; }
+  footer .visitas { color: var(--orange); }
+
+  @media (prefers-reduced-motion: reduce) {
+    header h1 .cursor { animation: none; }
+    .proyecto { transition: none; }
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 60px 20px 50px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="titlebar">
+    <span class="dot red"></span>
+    <span class="dot yellow"></span>
+    <span class="dot green"></span>
+    <span class="filename">juan-david-arenas.dev</span>
+    <button class="toggle-btn" id="themeToggle" aria-label="Cambiar entre modo oscuro y claro">☾ modo claro</button>
+  </div>
+
+  <header>
+    <p class="prompt">whoami</p>
+    <h1>Juan David Arenas<span class="cursor">&nbsp;</span></h1>
+    <p class="role">Análisis y Desarrollo de Software</p>
+  </header>
+
+  <nav>
+    <a href="#sobre-mi">Sobre mí</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section id="sobre-mi">
+    <h2>sobre-mi.md</h2>
+    <p>
+      Soy un joven proactivo, responsable y con alta capacidad de aprendizaje.
+      Me caracterizo por mi puntualidad, mi adaptabilidad al trabajo en equipo
+      y una fuerte motivación por aportar mis conocimientos teóricos al
+      entorno laboral. Actualmente estoy formándome en Análisis y Desarrollo
+      de Software, construyendo las bases para crecer como desarrollador.
+    </p>
+  </section>
+
+  <section id="proyectos">
+    <h2>proyectos/</h2>
+
+    <div class="proyecto">
+      <h3>Gestor de Tareas</h3>
+      <p>
+        Aplicación web para organizar tareas diarias: permite crear, marcar
+        como completadas y eliminar pendientes, guardando todo en el
+        navegador para que la lista no se pierda al cerrar la página.
+      </p>
+      <p class="stack">HTML · CSS · JavaScript · localStorage</p>
+    </div>
+
+    <div class="proyecto">
+      <h3>Sistema de Inventario</h3>
+      <p>
+        Aplicación de escritorio para gestionar el inventario de un pequeño
+        negocio: permite registrar productos, controlar existencias y
+        generar un reporte simple de stock disponible.
+      </p>
+      <p class="stack">Java · POO · MySQL</p>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <h2>contacto.txt</h2>
+    <p>📧 <a href="mailto:jdavidam37@gmail.com">jdavidam37@gmail.com</a></p>
+
+    <div class="msg-box">
+      <button id="saludoBtn">Salúdame 👋</button>
+      <span id="saludo-output"></span>
+    </div>
+  </section>
+
+  <footer>
+    <p>Juan David Arenas — 2026 · <span class="visitas" id="visitas">Visitas: 0</span></p>
+  </footer>
+
+  <script>
+    // 1) Toggle entre modo oscuro y modo claro, con memoria de la elección
+    const themeToggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+
+    function aplicarTema(tema) {
+      if (tema === 'light') {
+        root.setAttribute('data-theme', 'light');
+        themeToggle.textContent = '☀ modo oscuro';
+      } else {
+        root.removeAttribute('data-theme');
+        themeToggle.textContent = '☾ modo claro';
+      }
+    }
+
+    const temaGuardado = localStorage.getItem('tema') || 'dark';
+    aplicarTema(temaGuardado);
+
+    themeToggle.addEventListener('click', () => {
+      const temaActual = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      const nuevoTema = temaActual === 'light' ? 'dark' : 'light';
+      aplicarTema(nuevoTema);
+      localStorage.setItem('tema', nuevoTema);
+    });
+
+    // 2) Contador de visitas persistente
+    const visitasEl = document.getElementById('visitas');
+    let visitas = parseInt(localStorage.getItem('visitas') || '0', 10) + 1;
+    localStorage.setItem('visitas', visitas);
+    visitasEl.textContent = `Visitas: ${visitas}`;
+
+    // 3) Mensaje al hacer clic en el botón de saludo
+    const saludoBtn = document.getElementById('saludoBtn');
+    const saludoOutput = document.getElementById('saludo-output');
+    const saludos = [
+      '¡Gracias por pasar por mi portafolio!',
+      '¿Buscas un desarrollador en formación? Aquí estoy.',
+      '¡Escríbeme, con gusto conversamos!'
+    ];
+    saludoBtn.addEventListener('click', () => {
+      const mensaje = saludos[Math.floor(Math.random() * saludos.length)];
+      saludoOutput.textContent = mensaje;
+    });
+  </script>
+
+</body>
+</html>
